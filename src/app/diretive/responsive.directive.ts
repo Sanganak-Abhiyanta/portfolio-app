@@ -1,15 +1,13 @@
+import { Directive, ElementRef } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, HostBinding } from '@angular/core';
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+@Directive({
+  selector: '[appResponsive]'
 })
-export class AppComponent {
-  title = 'portfolio'; @HostBinding('class.pc')pcMode=false;
-  constructor(private breakpintObserver: BreakpointObserver) 
-  {
+export class ResponsiveDirective {
+  constructor(
+    private element: ElementRef,
+    private breakpintObserver: BreakpointObserver
+  ) {
     this.breakpintObserver
       .observe([Breakpoints.HandsetPortrait, Breakpoints.WebLandscape])
       .subscribe({
@@ -17,13 +15,14 @@ export class AppComponent {
           for (const breakPoint of Object.keys(result.breakpoints)) {
             if (result.breakpoints[breakPoint]) {
               if (breakPoint === Breakpoints.HandsetPortrait) {
-               this.pcMode=false;
+                this.element.nativeElement.classList.remove('pc');
               } else if (breakPoint === Breakpoints.WebLandscape) {
-                this.pcMode=true;
+                this.element.nativeElement.classList.add('pc');
               }
             }
           }
         },
       });
-    }
+  }
 }
+

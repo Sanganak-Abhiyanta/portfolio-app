@@ -1,0 +1,13 @@
+<div class="container">
+    <h1>Projects</h1>
+    <section *ngFor="let pro of projectList">
+        <h2>{{pro.title}} </h2>
+        <h3>
+            <span>Technologies : </span>
+            <span>{{pro.technologies}} </span>
+        </h3>
+        <ul *ngFor="let desc of pro.desc">
+            <li>{{desc}} </li>
+        </ul>
+    </section>
+</div>
